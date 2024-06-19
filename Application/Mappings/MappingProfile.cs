@@ -28,6 +28,13 @@ namespace APIBrechoRFCC.Application.Mappings
             CreateMap<ProductVariant, ProductVariantOutputDTO>();
             CreateMap<ProductVariantInputDTO, ProductVariant>()
                 .ForMember(dest => dest.Image, opt => opt.Ignore());
+
+            //Home
+            CreateMap<HomeBanner, HomeBannerOutputDTO>();
+            CreateMap<HomeBannerInputDTO, HomeBanner>();
+            CreateMap<HomeSection, HomeSectionOutputDTO>();
+            CreateMap<HomeSectionInputDTO, HomeSection>();
+
         }
     }
 }

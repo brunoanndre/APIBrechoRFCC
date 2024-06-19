@@ -14,6 +14,8 @@ namespace APIBrechoRFCC.Infrastructure.Context
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartLine> CartLines { get; set; }
+        public DbSet<HomeBanner> HomeBanners { get; set; }
+        public DbSet<HomeSection> HomeSections { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder builder)

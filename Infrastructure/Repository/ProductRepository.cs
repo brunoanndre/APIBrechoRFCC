@@ -1,12 +1,11 @@
 ﻿using APIBrechoRFCC.Core.Entities;
 using APIBrechoRFCC.Core.Exceptions;
 using APIBrechoRFCC.Infrastructure.Context;
-using APIBrechoRFCC.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrechoRFCC.Infrastructure.Repository
 {
-    public class ProductRepository : ICRUDRepository<Product>
+    public class ProductRepository
     {
         private readonly ECommerceDbContext _context;
 
@@ -33,6 +32,14 @@ namespace BrechoRFCC.Infrastructure.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<Product>> GetProductsByIds(List<string> Ids)
+        {
+            return await _context.Products
+                .Include(p => p.Options)
+                .Include(p => p.Variants)
+                .Where(p => Ids.Contains(p.Id.ToString()))
+                .ToListAsync();
+        }
         public async Task<Product> GetById(int id)
         {
             var product = await _context.Products
@@ -41,6 +48,12 @@ namespace BrechoRFCC.Infrastructure.Repository
 
             if(product == null) throw new ProductNotFoundException(id);
             return product;
+        }
+
+        public async Task<List<Product>> GetByTerm(string term)
+        {
+            var products = await _context.Products.Where(p => p.Title.Contains(term)).ToListAsync();
+            return products;
         }
 
         public async Task<Product> Update(Product product)

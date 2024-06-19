@@ -5,10 +5,8 @@ using APIBrechoRFCC.Core.Entities;
 using APIBrechoRFCC.Core.Exceptions;
 using APIBrechoRFCC.Infrastructure.Interface;
 using Microsoft.AspNetCore.Mvc;
-using FirebaseAdmin;
-using Google.Apis.Auth.OAuth2;
-using Google.Cloud.Storage.V1;
 using APIBrechoRFCC.Infrastructure.Services;
+using BrechoRFCC.Infrastructure.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,23 +16,21 @@ namespace APIBrechoRFCC.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ICRUDRepository<Product> _repository;
+        private readonly ProductRepository _repository;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _environment;
         private readonly FirebaseStorageService _firebaseStorageService;
 
-        public ProductController(ICRUDRepository<Product> repository, IMapper mapper,IWebHostEnvironment environment, FirebaseStorageService firebaseStorageService)
+        public ProductController(ProductRepository repository, IMapper mapper,IWebHostEnvironment environment, FirebaseStorageService firebaseStorageService)
         {
             _repository = repository;
             _mapper = mapper;
-            _environment = environment;
             _firebaseStorageService = firebaseStorageService;
         }
         // GET: v1/products
         [HttpGet]
-        public async Task<ActionResult<List<ProductOutputDTO>>> GetAll()
+        public async Task<ActionResult<List<ProductOutputDTO>>> GetProductsByIds([FromQuery] List<string> ids)
         {
-            var products = await _repository.GetAll();
+            var products = await _repository.GetProductsByIds(ids);
 
             if (products is null || products.Count <= 0) return NotFound("Não há produtos cadastrados.");
 
@@ -58,6 +54,16 @@ namespace APIBrechoRFCC.API.Controllers
             {
                 return NotFound(e.Message);
             }
+        }
+
+        //GET - v1/products/{search}
+        [HttpGet("/search")]
+        public async Task<ActionResult<List<ProductOutputDTO>>> GetProductsByTerm([FromQuery] string term)
+        {
+            var products = await _repository.GetByTerm(term);
+            if (products == null || products.Count == 0) return NotFound("Nenhum produto encontrado!");
+            var productsDTO = _mapper.Map<List<ProductOutputDTO>>(products);
+            return Ok(productsDTO);
         }
 
         // POST v1/products
