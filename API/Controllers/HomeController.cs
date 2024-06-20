@@ -1,8 +1,9 @@
-﻿using APIBrechoRFCC.Application.DTO.OutputDTOs;
+﻿using APIBrechoRFCC.Application.DTO.InputDTOs;
+using APIBrechoRFCC.Application.DTO.OutputDTOs;
 using APIBrechoRFCC.Core.Entities;
 using APIBrechoRFCC.Infrastructure.Repository;
+using APIBrechoRFCC.Infrastructure.Services;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIBrechoRFCC.API.Controllers
@@ -13,11 +14,14 @@ namespace APIBrechoRFCC.API.Controllers
     {
         private readonly HomeRepository _repository;
         private readonly IMapper _mapper;
+        private readonly FirebaseStorageService _firebaseStorageService;
 
-        public HomeController(HomeRepository repository, IMapper mapper)
+
+        public HomeController(HomeRepository repository, IMapper mapper, FirebaseStorageService firebaseStorageService)
         {
             _repository = repository;
             _mapper = mapper;
+            _firebaseStorageService = firebaseStorageService;
         }
 
         [HttpGet]
@@ -42,11 +46,16 @@ namespace APIBrechoRFCC.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<HomeBannerOutputDTO>> CreateBanner(HomeBannerOutputDTO bannerDTO)
+        public async Task<ActionResult<HomeBannerOutputDTO>> CreateBanner([FromForm]HomeBannerInputDTO bannerDTO)
         {
             if(bannerDTO == null) throw new ArgumentNullException(nameof(bannerDTO));
 
             var banner = _mapper.Map<HomeBanner>(bannerDTO);
+            if(bannerDTO.Image != null)
+            {
+                var image = await _firebaseStorageService.UploadFileAsync(bannerDTO.Image);
+                banner.Image = image;
+            }
 
             await _repository.CreateHomeBanner(banner);
 

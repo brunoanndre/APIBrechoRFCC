@@ -4,11 +4,8 @@ using AutoMapper;
 using APIBrechoRFCC.Infrastructure.Interface;
 using APIBrechoRFCC.Application.DTO.InputDTOs;
 using APIBrechoRFCC.Application.DTO.OutputDTOs;
-using static System.Net.Mime.MediaTypeNames;
 using APIBrechoRFCC.Core.Exceptions;
-using FirebaseAdmin;
 using Google.Cloud.Storage.V1;
-using Google.Apis.Auth.OAuth2;
 using APIBrechoRFCC.Infrastructure.Services;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,8 +17,6 @@ namespace APIBrechoRFCC.API.Controllers
     {
         private readonly ICRUDRepository<Category> _repository;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _environment;
-        private readonly StorageClient _storageClient;
         private readonly FirebaseStorageService _firebaseStorageService;
 
 
@@ -29,7 +24,6 @@ namespace APIBrechoRFCC.API.Controllers
         {
             _repository = repository;
             _mapper = mapper;
-            _environment = environment;
             _firebaseStorageService = firebaseStorageService;
         }
 

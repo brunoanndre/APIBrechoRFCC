@@ -1,10 +1,12 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
+using FirebaseAdmin;
 
 namespace APIBrechoRFCC.Infrastructure.Services
 {
     public class FirebaseStorageService
     {
+        FirebaseAdmin.FirebaseApp FirebaseAdminApp { get; set; }
         private readonly StorageClient _storageClient;
         private readonly string _bucketName = "brechorfcc-3c413.appspot.com"; 
 
@@ -13,6 +15,7 @@ namespace APIBrechoRFCC.Infrastructure.Services
             GoogleCredential googleCredential = GoogleCredential.FromFile(Path.Combine("Infrastructure", "brechorfcc-3c413-firebase-adminsdk-wp9it-879db85475.json"));
             _storageClient = StorageClient.Create(googleCredential);
         }
+
 
         public async Task<string> UploadFileAsync(IFormFile file)
         {
@@ -28,7 +31,9 @@ namespace APIBrechoRFCC.Infrastructure.Services
 
             using (var fileStream = new FileStream(tempFilePath, FileMode.Open))
             {
-                await _storageClient.UploadObjectAsync(_bucketName, uniqueFileName, null, fileStream);
+                var arquivo = await _storageClient.UploadObjectAsync(_bucketName, uniqueFileName, null, fileStream);
+                
+                 var batata = "batata";
             }
             System.IO.File.Delete(tempFilePath); // Limpar arquivo temporário
             return $"https://storage.googleapis.com/{_bucketName}/{uniqueFileName}";
@@ -48,11 +53,12 @@ namespace APIBrechoRFCC.Infrastructure.Services
                 using (var stream = file.OpenReadStream())
                 {
                     await _storageClient.UploadObjectAsync(_bucketName, uniqueFileName, null, stream);
-                    imageUrls.Add($"https://storage.googleapis.com/{_bucketName}/{uniqueFileName}");
+                    imageUrls.Add($"{uniqueFileName}");
                 }
             }
 
             return imageUrls;
         }
     }
+    
 }

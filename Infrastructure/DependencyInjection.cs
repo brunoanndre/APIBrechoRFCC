@@ -8,6 +8,7 @@ using BrechoRFCC.Infrastructure.Repository;
 using APIBrechoRFCC.Core.Entities;
 using APIBrechoRFCC.Infrastructure.Interface;
 using APIBrechoRFCC.Infrastructure.Services;
+using APIBrechoRFCC.Infrastructure.Repository;
 
 namespace APIBrechoRFCC.Infrastructure
 {
@@ -25,12 +26,13 @@ namespace APIBrechoRFCC.Infrastructure
             //Category
             services.AddScoped<ICRUDRepository<Category>, CategoryRepository>();
             //Product
-            services.AddScoped<ICRUDRepository<Product>, ProductRepository>();
+            services.AddScoped(typeof(ProductRepository));
             //ProductVariant
             services.AddScoped<ICRUDRepository<ProductVariant>, ProductVariantRepository>();
             //ProductOption
             services.AddScoped<ICRUDRepository<ProductOption>, ProductOptionRepository>();
-
+            //HomeBanner e HomeSection
+            services.AddScoped(typeof(HomeRepository));
             //AutoMapper
             services.AddAutoMapper(typeof(MappingProfile));
 

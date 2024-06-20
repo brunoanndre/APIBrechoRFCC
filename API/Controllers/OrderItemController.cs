@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using BrechoRFCC.Application.DTO;
 using BrechoRFCC.Core.Entities;
 using BrechoRFCC.Core.Exceptions;
@@ -86,3 +86,4 @@ namespace BrechoRFCC.API.Controllers
         
     }
 }
+*/
