@@ -31,7 +31,8 @@ namespace APIBrechoRFCC.Application.Mappings
 
             //Home
             CreateMap<HomeBanner, HomeBannerOutputDTO>();
-            CreateMap<HomeBannerInputDTO, HomeBanner>();
+            CreateMap<HomeBannerInputDTO, HomeBanner>()
+                .ForMember(dest => dest.Image, opt => opt.Ignore());
             CreateMap<HomeSection, HomeSectionOutputDTO>();
             CreateMap<HomeSectionInputDTO, HomeSection>();
 

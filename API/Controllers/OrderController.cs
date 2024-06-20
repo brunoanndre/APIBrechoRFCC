@@ -1,8 +1,9 @@
-﻿using AutoMapper;
-using BrechoRFCC.Application.DTO;
-using BrechoRFCC.Core.Entities;
-using BrechoRFCC.Core.Exceptions;
-using BrechoRFCC.Infrastructure.Repository;
+﻿/*using AutoMapper;
+using APIBrechoRFCC.Application.DTO.OutputDTOs;
+using APIBrechoRFCC.Application.DTO.InputDTOs;
+using APIBrechoRFCC.Core.Entities;
+using APIBrechoRFCC.Core.Exceptions;
+using APIBrechoRFCC.Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrechoRFCC.API.Controllers
@@ -99,3 +100,4 @@ namespace BrechoRFCC.API.Controllers
         
     }
 }
+*/
