@@ -1,6 +1,0 @@
-@APIBrechoRFCC_HostAddress = http://localhost:5265
-
-GET {{APIBrechoRFCC_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
