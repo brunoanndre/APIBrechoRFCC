@@ -32,8 +32,6 @@ namespace APIBrechoRFCC.Infrastructure.Services
             using (var fileStream = new FileStream(tempFilePath, FileMode.Open))
             {
                 var arquivo = await _storageClient.UploadObjectAsync(_bucketName, uniqueFileName, null, fileStream);
-                
-                 var batata = "batata";
             }
             System.IO.File.Delete(tempFilePath); // Limpar arquivo temporário
             return $"https://storage.googleapis.com/{_bucketName}/{uniqueFileName}";
