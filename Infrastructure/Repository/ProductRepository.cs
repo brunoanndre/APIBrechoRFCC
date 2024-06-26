@@ -34,11 +34,22 @@ namespace BrechoRFCC.Infrastructure.Repository
 
         public async Task<List<Product>> GetProductsByIds(List<string> Ids)
         {
-            return await _context.Products
-                .Include(p => p.Options)
-                .Include(p => p.Variants)
-                .Where(p => Ids.Contains(p.Id.ToString()))
-                .ToListAsync();
+            if (Ids.Count == 0)
+            {
+                return await _context.Products
+                      .Include(p => p.Options)
+                      .Include(p => p.Variants)
+                      .ToListAsync();
+            }
+            else
+            {
+                return await _context.Products
+                                .Include(p => p.Options)
+                                .Include(p => p.Variants)
+                                .Where(p => Ids.Contains(p.Id.ToString()))
+                                .ToListAsync();
+            }
+
         }
         public async Task<Product> GetById(int id)
         {
@@ -46,7 +57,7 @@ namespace BrechoRFCC.Infrastructure.Repository
                 .Include(p => p.Variants)
                 .Include(p => p.Options).SingleOrDefaultAsync(p => p.Id == id);
 
-            if(product == null) throw new ProductNotFoundException(id);
+            if (product == null) throw new ProductNotFoundException(id);
             return product;
         }
 
