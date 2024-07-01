@@ -8,7 +8,7 @@ namespace APIBrechoRFCC.Infrastructure.Services
     {
         FirebaseAdmin.FirebaseApp FirebaseAdminApp { get; set; }
         private readonly StorageClient _storageClient;
-        private readonly string _bucketName = "brechorfcc-3c413.appspot.com"; 
+        private readonly string _bucketName = "brechorfcc-3c413.appspot.com";
 
         public FirebaseStorageService()
         {
@@ -19,7 +19,7 @@ namespace APIBrechoRFCC.Infrastructure.Services
 
         public async Task<string> UploadFileAsync(IFormFile file)
         {
-            
+
             // Fazer upload da imagem para o Firebase Storage
             string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             string tempFilePath = Path.Combine(Path.GetTempPath(), uniqueFileName);
@@ -51,12 +51,12 @@ namespace APIBrechoRFCC.Infrastructure.Services
                 using (var stream = file.OpenReadStream())
                 {
                     await _storageClient.UploadObjectAsync(_bucketName, uniqueFileName, null, stream);
-                    imageUrls.Add($"{uniqueFileName}");
+                    imageUrls.Add($"https://storage.googleapis.com/{_bucketName}/{uniqueFileName}");
                 }
             }
 
             return imageUrls;
         }
     }
-    
+
 }
