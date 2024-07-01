@@ -16,7 +16,6 @@ namespace APIBrechoRFCC.Infrastructure.Repository
 
         public async Task Create(Order order)
         {
-            //order.CalculateTotal();
             await _context.AddAsync(order);
             await _context.SaveChangesAsync();
         }
@@ -25,6 +24,7 @@ namespace APIBrechoRFCC.Infrastructure.Repository
         {
             return await _context.Orders.AsNoTracking()
                 .Include(x => x.Items)
+                .ThenInclude(i =>  i.ProductVariant)
                 .ToListAsync();
         }
 
@@ -32,6 +32,7 @@ namespace APIBrechoRFCC.Infrastructure.Repository
         {
             var order = await _context.Orders
                 .Include(x=> x.Items)
+                .ThenInclude(i => i.ProductVariant)
                 .SingleOrDefaultAsync(x => x.Id == id);
             if (order == null) { throw new OrderNotFoundException(id); }
             return order;

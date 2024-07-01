@@ -41,7 +41,8 @@ namespace APIBrechoRFCC.Application.Mappings
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
             CreateMap<OrderInputDTO, Order>();
-            CreateMap<OrderItem, OrderItemOutputDTO>();
+            CreateMap<OrderItem, OrderItemOutputDTO>()
+                .ForMember(dest => dest.ProductVariant, opt => opt.MapFrom(src => src.ProductVariant));
             CreateMap<OrderItemInputDTO, OrderItem>();
         }
     }
