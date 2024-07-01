@@ -17,6 +17,8 @@ namespace APIBrechoRFCC.Infrastructure.Context
         public DbSet<HomeBanner> HomeBanners { get; set; }
         public DbSet<HomeSection> HomeSections { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder builder)

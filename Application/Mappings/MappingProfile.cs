@@ -36,6 +36,13 @@ namespace APIBrechoRFCC.Application.Mappings
             CreateMap<HomeSection, HomeSectionOutputDTO>();
             CreateMap<HomeSectionInputDTO, HomeSection>();
 
+            //Order
+            CreateMap<Order, OrderOutputDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+            CreateMap<OrderInputDTO, Order>();
+            CreateMap<OrderItem, OrderItemOutputDTO>();
+            CreateMap<OrderItemInputDTO, OrderItem>();
         }
     }
 }

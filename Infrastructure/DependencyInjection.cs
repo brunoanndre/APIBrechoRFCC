@@ -26,13 +26,15 @@ namespace APIBrechoRFCC.Infrastructure
             //Category
             services.AddScoped<ICRUDRepository<Category>, CategoryRepository>();
             //Product
-            services.AddScoped(typeof(ProductRepository));
+            services.AddScoped<ProductRepository>();
             //ProductVariant
             services.AddScoped<ICRUDRepository<ProductVariant>, ProductVariantRepository>();
             //ProductOption
             services.AddScoped<ICRUDRepository<ProductOption>, ProductOptionRepository>();
             //HomeBanner e HomeSection
-            services.AddScoped(typeof(HomeRepository));
+            services.AddScoped<HomeRepository>();
+            //Order
+            services.AddScoped<OrderRepository>();
             //AutoMapper
             services.AddAutoMapper(typeof(MappingProfile));
 
