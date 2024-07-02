@@ -27,11 +27,11 @@ namespace APIBrechoRFCC.Infrastructure.Repository
         public async Task<List<HomeBanner>> GetBanners()
         {
             return await _context.HomeBanners.ToListAsync();
-        }
+        } 
 
         public async Task<List<HomeSection>> GetSections()
         {
-            return await _context.HomeSections.Include(e => e.ProductIds).ToListAsync();
+            return await _context.HomeSections.ToListAsync();
         }
     }
 }
